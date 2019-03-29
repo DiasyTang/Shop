@@ -17,7 +17,7 @@
         <el-tooltip content="启用" placement="top">
           <el-button type="default" icon="el-icon-check" @click="changePermissions(1)"></el-button>
         </el-tooltip>
-        <el-button type="primary" @click="editPermission(null)">新增权限</el-button>
+        <el-button type="primary" v-has="'3333'" @click="editPermission(null)">新增权限</el-button>
       </el-button-group>
     </div>
     <el-table

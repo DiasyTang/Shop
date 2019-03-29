@@ -13,20 +13,21 @@
       <el-input type="password" v-model="loginForm.password" autocomplete="off"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submitForm('loginForm')">提交</el-button>
+      <el-button type="primary" :loading="loading" @click="submitForm('loginForm')">提交</el-button>
       <el-button @click="resetForm('loginForm')">重置</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-require("../../mock/index");
+import { Message } from "element-ui";
 import Vue from "vue";
 
 export default {
   name: "login",
   data() {
     return {
+      loading: false,
       loginForm: {
         userName: "",
         password: "",
@@ -44,18 +45,31 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
+          this.loading = true;
           this.$get("/user/login", {
             username: this.loginForm.userName,
             password: this.loginForm.password
-          }).then(response => {
-            if (response.isSuccess) {
-              let expireDays = 1000 * 60 * 60;
-              Vue.cookie.set("token", response.data, expireDays);
-              this.$router.push("/");
-            } else {
-              this.$message.error(response.message);
+          }).then(
+            response => {
+              this.loading = false;
+              if (response.isSuccess) {
+                let expireDays = 1000 * 60 * 60;
+                debugger;
+                Vue.cookie.set("token", response.data.token, expireDays);
+                sessionStorage.setItem(
+                  "accessCodes",
+                  response.data.accessCodes
+                );
+                this.$router.push("/");
+              } else {
+                Message.error(response.message);
+              }
+            },
+            err => {
+              this.loading = false;
+              Message.error(response.message);
             }
-          });
+          );
         }
       });
     },

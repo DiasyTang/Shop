@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import login from '@/components/login'
-import home from '@/components/home'
-import mystation from '@/components/my-station/work-station'
+
+const mystation = () => import('@/components/my-station/work-station')
+const login = () => import('@/components/login')
+const home = () => import('@/components/home')
 
 Vue.use(Router)
 
@@ -146,5 +147,12 @@ export default new Router({
         requireUnAuth: true,
       }
     },
+    {
+      path: '*',
+      redirect: '404',
+      meta: {
+        requireUnAuth: true,
+      }
+    }
   ]
 })

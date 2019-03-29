@@ -27,6 +27,12 @@ axios.interceptors.response.use(response => {
             });
             throw new Error(response.data.message);
         }
+        if (response.data.responseCode === 403) {
+            router.push({
+                path: "/403"
+            });
+            throw new Error(response.data.message);
+        }
     }
     return response;
 }, error => {

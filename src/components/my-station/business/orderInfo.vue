@@ -82,9 +82,12 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.push("order");
+      this.$router.push("/mystation/business/order");
     },
     confirmOrder() {}
+  },
+  created() {
+    this.orderForm.orderId = this.$route.params.orderId;
   }
 };
 </script>

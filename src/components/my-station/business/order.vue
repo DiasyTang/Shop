@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-collapse v-if="!goodId" v-model="openCollapse">
+    <el-collapse v-model="openCollapse">
       <el-collapse-item title="筛选" name="1">
         <el-form :inline="true" :model="searchForm" style="float:left">
           <el-form-item label="商品名称" prop="goodName">

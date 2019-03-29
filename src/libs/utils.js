@@ -29,3 +29,14 @@ export function getMenuByRouter(router, pages = []) {
     }
     return res;
 }
+
+export function hasPermission(value = '') {
+    if (!value) {
+        return false;
+    }
+    let buttonpermsStr = sessionStorage.getItem("accessCodes");
+    if (!buttonpermsStr) {
+        return false;
+    }
+    return buttonpermsStr.split(',').includes(value.trim());
+};

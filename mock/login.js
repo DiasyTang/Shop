@@ -43,14 +43,19 @@ const USER_PROFILE = {
         "business_good",
         "business_order",
         "sys_role"],
-    accessCodes: [""]
+    accessCodes: ["111", "222"]
 };
 
 export const login = req => {
     req = getParams(req.url);
     var user = USER_MAP.find(q => q.name == req.username);
     if (user) {
-        return { isSuccess: true, data: user.token, responseCode: 5200, message: "" };
+        return {
+            isSuccess: true, data: {
+                token: user.token,
+                accessCodes: ["111", "222"]
+            }, responseCode: 5200, message: ""
+        };
     }
     else {
         return { isSuccess: false, data: null, responseCode: 5200, message: "用户不存在" };
